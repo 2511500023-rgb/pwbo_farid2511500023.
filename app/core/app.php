@@ -10,13 +10,14 @@ class App {
         $url = $this->parseURL();
 
         // 1. Controller
-        if ($url && file_exists('../app/controllers/' . $url[0] . '.php')) {
-            $this->controller = $url[0];
+        // Menggunakan ucfirst() agar huruf pertama selalu kapital (misal: 'mahasiswa' -> 'Mahasiswa')
+        if ($url && file_exists('../app/controllers/' . ucfirst($url[0]) . '.php')) {
+            $this->controller = ucfirst($url[0]);
             unset($url[0]);
         }
 
         require_once '../app/controllers/' . $this->controller . '.php';
-        $this->controller = new $this->controller; // Instansiasi controller menjadi objek
+        $this->controller = new $this->controller; // Instansiasi controller
 
         // 2. Method
         if (isset($url[1])) {
